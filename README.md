@@ -3,7 +3,7 @@ Deploying .Net Microservices into Kubernetes, and moving deployments to the clou
 
 [![Build Status](https://dev.azure.com/krishna827intersecondary/vigneshwaraMicroservices2/_apis/build/status/shoppingapi-pipeline?branchName=master)](https://dev.azure.com/krishna827intersecondary/vigneshwaraMicroservices2/_build/latest?definitionId=7&branchName=master)
 
-
+[![Build Status](https://dev.azure.com/krishna827intersecondary/vigneshwaraMicroservices2/_apis/build/status/shoppingclient-pipeline?branchName=master)](https://dev.azure.com/krishna827intersecondary/vigneshwaraMicroservices2/_build/latest?definitionId=8&branchName=master)
 
 
 
