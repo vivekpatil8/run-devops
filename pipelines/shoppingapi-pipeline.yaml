@@ -9,7 +9,7 @@ trigger:
     paths:
       include:
       - Shopping/Shopping.API/*
-      - aks/shoppingapi.yaml
+      - aks/shoppingclient.yaml
       
 
 resources:
@@ -78,7 +78,7 @@ stages:
             inputs:
               action: deploy
               manifests: |
-                $(Pipeline.Workspace)/aks/shoppingapi.yaml
+                $(Pipeline.Workspace)/aks/shoppingclient.yaml
               imagePullSecrets: |
                 $(imagePullSecret)
               containers: |
