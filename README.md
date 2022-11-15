@@ -1,6 +1,12 @@
 # Deploying .Net Microservices to Azure Kubernetes Services(AKS) and Automating with Azure DevOps
 Deploying .Net Microservices into Kubernetes, and moving deployments to the cloud Azure Kubernetes Services (AKS) with using Azure Container Registry (ACR) and how to Automating Deployments with Azure DevOps and GitHub.
 
+[![Build Status](https://dev.azure.com/krishna827intersecondary/vigneshwaraMicroservices2/_apis/build/status/shoppingapi-pipeline?branchName=master)](https://dev.azure.com/krishna827intersecondary/vigneshwaraMicroservices2/_build/latest?definitionId=7&branchName=master)
+
+
+
+
+
 | Image | Status |
 | ------------- | ------------- |
 | Shopping Client |  [![Build Status](https://dev.azure.com/ezozkme/shopping/_apis/build/status/shoppingclient-pipeline?branchName=main)](https://dev.azure.com/ezozkme/shopping/_build/latest?definitionId=14&branchName=main) |
@@ -40,3 +46,7 @@ When we push code to Github, microservices pipeline triggers, build docker image
 ![cicd](https://user-images.githubusercontent.com/1147445/105671542-f37c3700-5ef3-11eb-9532-59a5855214d0.png)
 
 You’ll see how to deploy your multi-container microservices applications with automating all deployment process seperately.
+
+
+
+
