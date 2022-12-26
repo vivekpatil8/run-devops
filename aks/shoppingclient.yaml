@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: shoppingclient
-          image: vigneshwarashoppingacr.azurecr.io/shoppingclient:v2
+          image: vigneshwarasacr.azurecr.io/shoppingclient:v1
           imagePullPolicy: IfNotPresent          
           ports:
             - containerPort: 80
@@ -43,7 +43,7 @@ kind: Service
 metadata:
   name: shoppingclient-service
 spec:
-  type: LoadBalancer
+  type: LoadBalancer   # we defining load balancer in this client application consumes from external ports
   selector:
     app: shoppingclient
   ports:
