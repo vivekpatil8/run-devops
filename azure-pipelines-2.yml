@@ -60,3 +60,12 @@ stages:
         secretType: 'dockerRegistry'
         secretName: '$(acrsecret)'
         dockerRegistryEndpoint: 'vamshiacr'
+    - task: KubernetesManifest@0
+      inputs:
+        action: 'deploy'
+        kubernetesServiceConnection: 'dev'
+        namespace: 'default'
+        manifests: $(Pipeline.Workspace)/drop/s/aks/shoppingclient/service.yml
+        containers: 'vigneshwarasacr.azurecr.io/shoppingclient:207'
+        imagePullSecrets: '$(acrsecret)'
+    
