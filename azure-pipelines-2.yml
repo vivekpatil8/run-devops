@@ -27,6 +27,6 @@ stages:
         command: buildAndPush
         repository: shoppingclient
         Dockerfile: '$(Build.SourcesDirectory)/Shopping/Shopping.Client/Dockerfile'
-        buildContext: $(Build.SourcesDirectory)/Shopping
+        # buildContext: $(Build.SourcesDirectory)/Shopping
         tags: |
           $(tag)
