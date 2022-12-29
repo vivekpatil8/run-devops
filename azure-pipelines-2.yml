@@ -27,6 +27,36 @@ stages:
         command: buildAndPush
         repository: shoppingclient
         Dockerfile: '$(Build.SourcesDirectory)/Shopping/Shopping.Client/Dockerfile'
-        # buildContext: $(Build.SourcesDirectory)/Shopping
+        buildContext: $(Build.SourcesDirectory)/Shopping
         tags: |
           $(tag)
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Pipeline.Workspace)'
+        artifact: 'drop'
+        publishLocation: 'pipeline'
+
+- stage: Deplo
+  displayName: Deploy k8s
+  dependsOn: Build
+  variables:
+    acrsecret: k8sexamplesacrauth
+  jobs:
+  - job: Deploy
+    displayName: Deploy
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        buildType: 'current'
+        artifactName: 'drop'
+        targetPath: '$(Pipeline.Workspace)/drop'
+    - task: KubernetesManifest@0
+      inputs:
+        action: 'createSecret'
+        kubernetesServiceConnection: 'dev'
+        namespace: 'default'
+        secretType: 'dockerRegistry'
+        secretName: '$(acrsecret)'
+        dockerRegistryEndpoint: 'vamshiacr'
