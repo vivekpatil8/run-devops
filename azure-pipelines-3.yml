@@ -1,0 +1,91 @@
+# Docker
+# Build a Docker image
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- master
+
+resources:
+- repo: self
+
+variables:
+  tag: '$(Build.BuildId)'
+
+  imageRepository: 'shoppingapi'
+
+
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    # - task: Docker@2
+    #   displayName: Build and push an image to container registry
+    #   inputs:
+    #     containerRegistry: 'vigneshwarasacr'
+    #     command: buildAndPush
+    #     repository: shoppingclient
+    #     Dockerfile: '$(Build.SourcesDirectory)/Shopping/Shopping.Client/Dockerfile'
+    #     buildContext: $(Build.SourcesDirectory)/Shopping
+    #     tags: |
+    #       $(tag)
+
+#     - task: Docker@2
+#       displayName: Build and push an image to container registry
+#       inputs:
+#         containerRegistry: 'vigneshwarasacr'
+#         command: buildAndPush
+#         repository: $(imageRepository)
+#         Dockerfile: '$(Build.SourcesDirectory)/Shopping/Shopping.API/Dockerfile'
+#         buildContext: $(Build.SourcesDirectory)/Shopping
+#         tags: |
+#           $(tag)
+
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Pipeline.Workspace)'
+        artifact: 'drop'
+        publishLocation: 'pipeline'
+
+- stage: Deplo
+  displayName: Deploy k8s
+  dependsOn: Build
+  variables:
+    acrsecret: k8sexamplesacrauth
+  jobs:
+  - job: Deploy
+    displayName: Deploy
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        buildType: 'current'
+        artifactName: 'drop'
+        targetPath: '$(Pipeline.Workspace)/drop'
+    - task: KubernetesManifest@0
+      inputs:
+        action: 'createSecret'
+        kubernetesServiceConnection: 'dev'
+        namespace: 'default'
+        secretType: 'dockerRegistry'
+        secretName: '$(acrsecret)'
+        dockerRegistryEndpoint: 'vamshiacr'
+    - task: KubernetesManifest@0
+      inputs:
+        action: 'deploy'
+        kubernetesServiceConnection: 'dev'
+        namespace: 'default'
+        manifests: |
+            $(Pipeline.Workspace)/drop/s/aks/shoppingclient.yaml
+            $(Pipeline.Workspace)/drop/s/aks/shoppingapi.yaml
+        containers: |
+            'vigneshwarasacr.azurecr.io/shoppingclient:207'
+            'vigneshwarasacr.azurecr.io/shoppingapi:197'
+        imagePullSecrets: '$(acrsecret)'
+        rolloutStatusTimeout: '1200'
+    
