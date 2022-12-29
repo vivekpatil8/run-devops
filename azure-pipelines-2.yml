@@ -25,7 +25,8 @@ stages:
         containerRegistry: 'vamshiacr'
         repository: 'acrdev'
         command: 'buildAndPush'
-        Dockerfile: 'Shopping/Shopping.API/Dockerfile'
+        Dockerfile: '$(Build.SourcesDirectory)/Shopping/Shopping.API/Dockerfile'
+        buildContext: $(Build.SourcesDirectory)/Shopping
         tags: |
           $(Build.BuildId)
           latest
