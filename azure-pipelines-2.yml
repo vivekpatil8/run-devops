@@ -65,7 +65,7 @@ stages:
         action: 'deploy'
         kubernetesServiceConnection: 'dev'
         namespace: 'default'
-        manifests: $(Pipeline.Workspace)/drop/s/aks/shoppingclient.yml
+        manifests: $(Pipeline.Workspace)/drop/s/aks/shoppingclient.yaml
         containers: 'vigneshwarasacr.azurecr.io/shoppingclient:207'
         imagePullSecrets: '$(acrsecret)'
     
