@@ -21,12 +21,12 @@ stages:
       vmImage: ubuntu-latest
     steps:
     - task: Docker@2
+      displayName: Build and push an image to container registry
       inputs:
-        containerRegistry: 'vamshiacr'
-        repository: 'acrdev'
-        command: 'buildAndPush'
-        Dockerfile: '$(Build.SourcesDirectory)/Shopping/Shopping.API/Dockerfile'
+        containerRegistry: 'vigneshwarasacr'
+        command: buildAndPush
+        repository: shoppingclient
+        Dockerfile: '$(Build.SourcesDirectory)/Shopping/Shopping.Client/Dockerfile'
         buildContext: $(Build.SourcesDirectory)/Shopping
         tags: |
-          $(Build.BuildId)
-          latest
+          $(tag)
