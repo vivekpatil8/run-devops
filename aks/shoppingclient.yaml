@@ -16,27 +16,27 @@ spec:
     spec:
       containers:
         - name: shoppingclient
-          image: vigneshwarasacr.azurecr.io/shoppingclient:v1
-          imagePullPolicy: IfNotPresent          
+          image: vigneshwarasacr.azurecr.io/shoppingclient:207
+#           imagePullPolicy: IfNotPresent          
           ports:
             - containerPort: 80
-          env:
-            - name: ASPNETCORE_ENVIRONMENT
-              value: Development
-            - name: ShoppingAPIUrl
-              valueFrom:
-                  configMapKeyRef:
-                    name: shoppingapi-configmap
-                    key: shoppingapi_url
-          resources:
-            requests:
-              memory: "64Mi"
-              cpu: "0.1"
-            limits:
-              memory: "128Mi"
-              cpu: "0.3"
-      imagePullSecrets:
-        - name: acr-secret
+#           env:
+#             - name: ASPNETCORE_ENVIRONMENT
+#               value: Development
+#             - name: ShoppingAPIUrl
+#               valueFrom:
+#                   configMapKeyRef:
+#                     name: shoppingapi-configmap
+#                     key: shoppingapi_url
+#           resources:
+#             requests:
+#               memory: "64Mi"
+#               cpu: "0.1"
+#             limits:
+#               memory: "128Mi"
+#               cpu: "0.3"
+#       imagePullSecrets:
+#         - name: acr-secret
 ---
 apiVersion: v1
 kind: Service
